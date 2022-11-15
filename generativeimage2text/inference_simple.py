@@ -81,8 +81,8 @@ def test_git_inference_single_image(image_path, model_name, prefix):
 
     # model
     model = get_git_model(tokenizer, param)
-    pretrained = f'output/{model_name}/snapshot/model.pt'
-    checkpoint = torch_load(pretrained)['model']
+    # pretrained = f'output/{model_name}/snapshot/model.pt'
+    # checkpoint = torch_load(pretrained)['model']
     checkpoint = torch.hub.load_state_dict_from_url("https://publicgit.blob.core.windows.net/data/output/GIT_BASE/snapshot/model.pt",
                                                 map_location="cpu")["model"]
     load_state_dict(model, checkpoint)
