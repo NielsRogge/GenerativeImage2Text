@@ -16,9 +16,9 @@ from torchvision.transforms import Compose, Resize, CenterCrop, ToTensor, Normal
 from PIL import Image
 from azfuse import File
 
-from .common import init_logging
-from .common import parse_general_args
-from .tsv_io import load_from_yaml_file
+# from .common import init_logging
+# from .common import parse_general_args
+# from .tsv_io import load_from_yaml_file
 from .torch_common import torch_load
 from .torch_common import load_state_dict
 from .process_image import load_image_by_pil
