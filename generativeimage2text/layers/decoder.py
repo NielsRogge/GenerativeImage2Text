@@ -112,6 +112,10 @@ class BertEncoderAsDecoder(nn.Module):
         memory = memory.transpose(0, 1)
 
         hidden_states = torch.cat((memory, tgt), dim=1)
+
+        print("Shape of hidden states before Transformer:", hidden_states.shape)
+        print("First values of hidden states before Transformer:", hidden_states[0,:3,:3])
+
         num_tgt = tgt.shape[1]
         num_memory = memory.shape[1]
         device = tgt.device
@@ -1046,6 +1050,7 @@ class CaptioningModel(nn.Module):
             bi_valid_mask_caption=bi_valid_mask_caption,
             encoder_history_states=self.prev_encoded_layers,
         )
+        print("Shape of logits:", logits.shape)
         if self.scst or self.use_history_for_infer:
             if isinstance(logits, tuple) and len(logits) == 2:
                 if self.prev_encoded_layers is None:
@@ -1130,8 +1135,14 @@ class GeneratorWithBeamSearch(object):
         done = [False for _ in range(batch_size)]
 
         while cur_len < max_length:
+            if cur_len > 1:
+                break
+                print("Stopping generation of text")
+
             scores = step(input_ids)  # (batch_size * num_beams, cur_len, vocab_size)
             vocab_size = scores.shape[-1]
+
+            print("Shape of scores:", scores.shape)
 
             ## if model has past, then set the past variable to speed up decoding
             #if self._do_output_past(outputs):
