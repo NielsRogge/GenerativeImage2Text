@@ -1099,6 +1099,8 @@ class GeneratorWithBeamSearch(object):
         top_p=None,
         num_return_sequences=1,
     ):
+        print("Input ids:", input_ids)
+
         if num_return_sequences != 1:
             input_ids = input_ids[:, None, :].expand(
                 input_ids.shape[0], num_return_sequences, input_ids.shape[1])
@@ -1136,9 +1138,9 @@ class GeneratorWithBeamSearch(object):
 
         while cur_len < max_length:
             if cur_len > 1:
-                break
                 print("Stopping generation of text")
-
+                break
+                
             scores = step(input_ids)  # (batch_size * num_beams, cur_len, vocab_size)
             vocab_size = scores.shape[-1]
 
