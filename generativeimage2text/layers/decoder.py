@@ -115,6 +115,7 @@ class BertEncoderAsDecoder(nn.Module):
 
         print("Shape of hidden states before Transformer:", hidden_states.shape)
         print("First values of hidden states before Transformer:", hidden_states[0,:3,:3])
+        print("Last values of hidden states before Transformer:", hidden_states[0,-3:,-3:])
 
         num_tgt = tgt.shape[1]
         num_memory = memory.shape[1]
@@ -930,6 +931,9 @@ class CaptioningModel(nn.Module):
             #else:
             caption_token_input = batch["caption_tokens"]
             #caption_lengths = batch["caption_lengths"]
+
+            # the textual here corresponds to TransformerDecoderTextualHead
+            print("Hidden valid mask:", visual_features_valid)
 
             output_logits = self.textual(
                 visual_features,
