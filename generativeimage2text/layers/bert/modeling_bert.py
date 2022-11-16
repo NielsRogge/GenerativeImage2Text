@@ -315,12 +315,16 @@ class BertEncoder(nn.Module):
                 all_hidden_states = all_hidden_states + (hidden_states,)
 
             history_state = None if encoder_history_states is None else encoder_history_states[i]
+            if i == 0:
+                print(f"Hidden states before layer {i}: ", hidden_states[0,:3,:3])
             layer_outputs = layer_module(
                 hidden_states, attention_mask,
                 (None if head_mask is None else head_mask[i]),
                 history_state,
             )
             hidden_states = layer_outputs[0]
+            if i == 0:
+                print(f"Hidden states after layer {i}: ", hidden_states[0,:3,:3])
 
             if self.output_attentions:
                 all_attentions = all_attentions + (layer_outputs[1],)
