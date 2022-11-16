@@ -859,6 +859,7 @@ class CaptioningModel(nn.Module):
             visual_features = None
 
         print("Shape of visual features:", visual_features.shape)
+        print("First values of visual features:", visual_features[0,:3,:3])
 
         visual_features_valid = None
         if 'context' in batch:
