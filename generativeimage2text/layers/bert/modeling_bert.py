@@ -316,7 +316,8 @@ class BertEncoder(nn.Module):
 
             history_state = None if encoder_history_states is None else encoder_history_states[i]
             if i == 0:
-                print(f"Hidden states before layer {i}: ", hidden_states[0,:3,:3])
+                print(f"First values of hidden states before layer {i}: ", hidden_states[0,:3,:3])
+                print(f"Last values of hidden states before layer {i}: ", hidden_states[0,-3:,-3:])
             layer_outputs = layer_module(
                 hidden_states, attention_mask,
                 (None if head_mask is None else head_mask[i]),
@@ -324,12 +325,17 @@ class BertEncoder(nn.Module):
             )
             hidden_states = layer_outputs[0]
             if i == 0:
-                print(f"Hidden states after layer {i}: ", hidden_states[0,:3,:3])
+                print(f"First values of hidden states after layer {i}: ", hidden_states[0,:3,:3])
+                print(f"Last values of hidden states after layer {i}: ", hidden_states[0,-3:,-3:])
 
             if self.output_attentions:
                 all_attentions = all_attentions + (layer_outputs[1],)
         if self.pre_norm:
             hidden_states = self.LayerNorm(hidden_states)
+        
+        print("Shape of final hidden states:", hidden_states.shape)
+        print("First values of final hidden states: ", hidden_states[0,:3,:3])
+        
         outputs = (hidden_states,)
         if self.output_hidden_states:
             outputs = outputs + (all_hidden_states,)
