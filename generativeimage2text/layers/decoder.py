@@ -1059,6 +1059,7 @@ class CaptioningModel(nn.Module):
             encoder_history_states=self.prev_encoded_layers,
         )
         print("Shape of logits:", logits.shape)
+        print("First values of logits:", logits[0, :3, :3])
         if self.scst or self.use_history_for_infer:
             if isinstance(logits, tuple) and len(logits) == 2:
                 if self.prev_encoded_layers is None:
