@@ -932,9 +932,6 @@ class CaptioningModel(nn.Module):
             caption_token_input = batch["caption_tokens"]
             #caption_lengths = batch["caption_lengths"]
 
-            # the textual here corresponds to TransformerDecoderTextualHead
-            print("Hidden valid mask:", visual_features_valid)
-
             output_logits = self.textual(
                 visual_features,
                 caption_token_input,
@@ -1044,6 +1041,9 @@ class CaptioningModel(nn.Module):
         else:
             # Add a timestep. shape: (batch_size, 1)
             partial_captions = partial_captions.unsqueeze(1)
+
+        # the textual here corresponds to TransformerDecoderTextualHead
+        print("Hidden valid mask:", visual_features_valid)
 
         # shape: (batch_size * beam_size, partial_caption_length, vocab_size)
         logits = self.textual(
