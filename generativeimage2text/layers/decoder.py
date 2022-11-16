@@ -857,6 +857,9 @@ class CaptioningModel(nn.Module):
                 visual_features = self.image_encoder(batch['image'])
         else:
             visual_features = None
+
+        print("Shape of visual features:", visual_features.shape)
+
         visual_features_valid = None
         if 'context' in batch:
             context_embedding = self.context_embedding if self.context_not_share_embedding else self.textual.embedding
