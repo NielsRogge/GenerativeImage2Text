@@ -153,6 +153,10 @@ class BertEncoderAsDecoder(nn.Module):
         # add axis for multi-head
         full_attention_mask = full_attention_mask[:, None, :, :]
 
+        print("Shape of extended attention mask:", full_attention_mask.shape)
+        print("Mean of extended attention mask:", full_attention_mask.mean())
+        print("Sum of extended attention mask:", full_attention_mask.sum())
+
         if encoder_history_states is None:
             result = self.encoder(
                 hidden_states=hidden_states,
