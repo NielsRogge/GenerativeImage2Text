@@ -555,6 +555,7 @@ class TransformerDecoderTextualHead(TextualHead):
         # We transpose the first two dimensions of tokens embeddings and visual
         # features, as required by decoder.
         caption_embeddings = caption_embeddings.transpose(0, 1)
+        print("Shape of caption embeddings: ", caption_embeddings.shape)
         if projected_visual_features is not None:
             projected_visual_features = projected_visual_features.transpose(0, 1)
         else:
@@ -594,6 +595,10 @@ class TransformerDecoderTextualHead(TextualHead):
 
         # shape: (batch_size, max_caption_length, vocab_size)
         output_logits = self.output(textual_features)
+
+        print("Shape of output logits:", output_logits.shape)
+        print("First values of output logits:", output_logits[0, :3, :3])
+
         if isinstance(trans_out, tuple):
             if return_dict:
                 ret['output_logits'] = output_logits
