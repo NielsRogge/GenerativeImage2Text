@@ -1152,8 +1152,8 @@ class GeneratorWithBeamSearch(object):
 
         while cur_len < max_length:
             if cur_len > 1:
-                print("Stopping generation of text")
-                break
+                # ration of text")
+                # break
                 
             scores = step(input_ids)  # (batch_size * num_beams, cur_len, vocab_size)
             vocab_size = scores.shape[-1]
