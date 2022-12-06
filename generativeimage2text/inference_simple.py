@@ -7,6 +7,8 @@
 
 # from .tsv_io import TSVFile, tsv_writer, tsv_reader
 # from .common import write_to_file
+import argparse
+
 import torch
 import PIL
 from pprint import pformat
@@ -83,7 +85,7 @@ def test_git_inference_single_image(image_path, model_name, prefix):
     model = get_git_model(tokenizer, param)
     # pretrained = f'output/{model_name}/snapshot/model.pt'
     # checkpoint = torch_load(pretrained)['model']
-    checkpoint = torch.hub.load_state_dict_from_url("https://publicgit.blob.core.windows.net/data/output/GIT_BASE/snapshot/model.pt",
+    checkpoint = torch.hub.load_state_dict_from_url(f"https://publicgit.blob.core.windows.net/data/output/{model_name}/snapshot/model.pt",
                                                 map_location="cpu")["model"]
     load_state_dict(model, checkpoint)
     model.cuda()
@@ -145,7 +147,23 @@ def get_image_transform(param):
     return transforms
 
 if __name__ == '__main__':
-    test_git_inference_single_image(image_path="aux_data/images/1.jpg", model_name="GIT_BASE", prefix="")
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--model_name",
+        default="GIT_BASE",
+        type=str,
+        help="Name of the model you'd like to try.",
+    )
+    parser.add_argument(
+        "--prefix",
+        default="",
+        type=str,
+        help="Prefix for generating text.",
+    )
+
+    args = parser.parse_args()
+    test_git_inference_single_image(image_path="aux_data/images/1.jpg", model_name=args.model_name, prefix=args.prefix)
     # init_logging()
     # kwargs = parse_general_args()
     # logging.info('param:\n{}'.format(pformat(kwargs)))
