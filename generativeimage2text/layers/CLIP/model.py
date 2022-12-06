@@ -227,6 +227,7 @@ class VisualTransformer(nn.Module):
         self.class_embedding = nn.Parameter(scale * torch.randn(width))
         print("Input resolution:", input_resolution)
         print("Patch size:", patch_size)
+        print("Scale:", scale)
         self.positional_embedding = nn.Parameter(scale * torch.randn((input_resolution // patch_size) ** 2 + 1, width))
         self.ln_pre = LayerNorm(width)
 
@@ -410,6 +411,10 @@ def build_model(state_dict: dict, skip_load=False):
         vision_patch_size = state_dict["visual.conv1.weight"].shape[-1]
         grid_size = round((state_dict["visual.positional_embedding"].shape[0] - 1) ** 0.5)
         image_resolution = vision_patch_size * grid_size
+        print("Vision patch size:", vision_patch_size)
+        print("Image resolution:", image_resolution)
+        print("Grid size:", grid_size)
+        print("Vision_width:", vision_width)
     else:
         counts: list = [len(set(k.split(".")[2] for k in state_dict if k.startswith(f"visual.layer{b}"))) for b in [1, 2, 3, 4]]
         vision_layers = tuple(counts)
