@@ -86,7 +86,7 @@ def test_git_inference_single_image(image_path, model_name, prefix):
     # pretrained = f'output/{model_name}/snapshot/model.pt'
     # checkpoint = torch_load(pretrained)['model']
     checkpoint = torch.hub.load_state_dict_from_url(f"https://publicgit.blob.core.windows.net/data/output/{model_name}/snapshot/model.pt",
-                                                map_location="cpu")["model"]
+                                                map_location="cpu", file_name=model_name)["model"]
     load_state_dict(model, checkpoint)
     model.cuda()
     model.eval()
@@ -121,6 +121,7 @@ def test_git_inference_single_image(image_path, model_name, prefix):
             'image': img,
             'prefix': torch.tensor(input_ids).unsqueeze(0).cuda(),
         })
+
     cap = tokenizer.decode(result['predictions'][0].tolist(), skip_special_tokens=True)
     print("Caption:", cap)
     logging.info('output: {}'.format(cap))
