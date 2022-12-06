@@ -1151,7 +1151,7 @@ class GeneratorWithBeamSearch(object):
         done = [False for _ in range(batch_size)]
 
         while cur_len < max_length:
-            if cur_len > 1:
+            # if cur_len > 1:
                 # ration of text")
                 # break
                 
