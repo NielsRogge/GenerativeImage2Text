@@ -114,6 +114,8 @@ def test_git_inference_single_image(image_path, model_name, prefix):
         payload = payload[-(max_text_len - 2):]
     input_ids = [tokenizer.cls_token_id] + payload
 
+    print("Decoding of prompt:", tokenizer.decode(input_ids))
+
     with torch.no_grad():
         result = model({
             'image': img,
